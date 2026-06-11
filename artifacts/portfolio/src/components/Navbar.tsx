@@ -33,8 +33,11 @@ export default function Navbar() {
     >
       <div className="container mx-auto flex items-center justify-between px-6">
         <a href="#home" className="group relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 neon-glow-hover transition-all duration-300 overflow-hidden">
-          <span className="relative z-10 text-xl font-bold tracking-tighter text-gradient group-hover:scale-110 transition-transform">AD</span>
-          <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <img
+            src="/profile-logo.jpg"
+            alt="Abdimaalik Developer"
+            className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"
+          />
         </a>
 
         <div className="hidden md:flex items-center space-x-8">
