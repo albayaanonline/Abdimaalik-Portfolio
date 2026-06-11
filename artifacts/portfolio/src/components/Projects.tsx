@@ -1,37 +1,170 @@
 import { motion } from "framer-motion";
 import { 
   SiReact, SiNodedotjs, SiPostgresql, SiOpenai, 
-  SiExpress, SiNextdotjs, SiTypescript, SiSupabase 
+  SiExpress, SiNextdotjs, SiTypescript, SiSupabase,
+  SiTailwindcss, SiPython
 } from "react-icons/si";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Globe, Star } from "lucide-react";
+
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  icons: React.ComponentType<{ className?: string }>[]; 
+  liveUrl?: string;
+  githubUrl?: string;
+  isReal?: boolean;
+  badge?: string;
+};
 
 export default function Projects() {
-  const projects = [
+  const realProjects: Project[] = [
+    {
+      title: "Albayaan Online",
+      description: "A professional Islamic and educational platform designed to provide valuable content and digital services to a global audience.",
+      tags: ["Web Platform", "Education", "Islamic Content"],
+      icons: [SiReact, SiNodedotjs, SiTailwindcss],
+      liveUrl: "https://albayaanonline.com",
+      isReal: true,
+      badge: "Live Website",
+    },
+    {
+      title: "Albayaan Pro",
+      description: "A modern web platform built to provide advanced digital services, tools, and online solutions for businesses and individuals.",
+      tags: ["Web App", "Digital Services", "SaaS"],
+      icons: [SiNextdotjs, SiTypescript, SiTailwindcss],
+      liveUrl: "https://albayaan.pro",
+      isReal: true,
+      badge: "Live Website",
+    },
+  ];
+
+  const demoProjects: Project[] = [
     {
       title: "Quran Learning Platform",
       description: "Interactive Quran learning platform with real-time progress tracking, student dashboards, and a modern, accessible user experience.",
       tags: ["React", "Node.js", "PostgreSQL"],
-      icons: [SiReact, SiNodedotjs, SiPostgresql]
+      icons: [SiReact, SiNodedotjs, SiPostgresql],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
     },
     {
       title: "AI WhatsApp Agent",
       description: "An intelligent WhatsApp assistant capable of answering customer messages, handling inquiries, and automating conversational workflows.",
-      tags: ["OpenAI", "Node.js", "Make.com"],
-      icons: [SiOpenai, SiNodedotjs]
+      tags: ["OpenAI", "Node.js", "Automation"],
+      icons: [SiOpenai, SiNodedotjs],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
     },
     {
-      title: "Business Management System",
-      description: "Comprehensive digital business management platform featuring real-time analytics, reporting, and resource planning.",
+      title: "Business Management Dashboard",
+      description: "Comprehensive digital business management platform featuring real-time analytics, reporting, and resource planning tools.",
       tags: ["React", "Express", "PostgreSQL"],
-      icons: [SiReact, SiExpress, SiPostgresql]
+      icons: [SiReact, SiExpress, SiPostgresql],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
     },
     {
-      title: "Online Learning Platform",
+      title: "Online Learning System",
       description: "Educational platform featuring structured courses, interactive quizzes, video hosting, and robust student performance tracking.",
       tags: ["Next.js", "TypeScript", "Supabase"],
-      icons: [SiNextdotjs, SiTypescript, SiSupabase]
-    }
+      icons: [SiNextdotjs, SiTypescript, SiSupabase],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
+    },
+    {
+      title: "AI Automation Platform",
+      description: "End-to-end AI workflow automation platform that connects services, triggers actions, and eliminates repetitive manual tasks.",
+      tags: ["OpenAI", "Python", "Node.js"],
+      icons: [SiOpenai, SiPython, SiNodedotjs],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
+    },
+    {
+      title: "Modern SaaS Dashboard",
+      description: "Feature-rich SaaS admin dashboard with real-time data visualization, user management, billing integration, and dark mode.",
+      tags: ["React", "TypeScript", "Tailwind CSS"],
+      icons: [SiReact, SiTypescript, SiTailwindcss],
+      githubUrl: "https://github.com/ablayaanonline",
+      badge: "Personal Project",
+    },
   ];
+
+  const ProjectCard = ({ project, idx, delay }: { project: Project; idx: number; delay: number }) => (
+    <motion.div
+      key={idx}
+      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      whileHover={{ y: -5 }}
+      className="group glass-panel rounded-2xl overflow-hidden flex flex-col border border-white/5 hover:border-primary/40 transition-all duration-300"
+    >
+      {/* Card Header / Screenshot Placeholder */}
+      <div className="h-48 w-full bg-gradient-to-br from-background via-muted to-background relative overflow-hidden flex items-center justify-center border-b border-white/5 group-hover:border-primary/20">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+        {project.isReal && (
+          <div className="absolute top-3 right-3 flex items-center gap-1 bg-primary/20 border border-primary/40 text-primary text-xs font-semibold px-2 py-1 rounded-full">
+            <Globe className="w-3 h-3" /> Live
+          </div>
+        )}
+        {project.badge && !project.isReal && (
+          <div className="absolute top-3 right-3 flex items-center gap-1 bg-secondary/10 border border-secondary/20 text-muted-foreground text-xs font-medium px-2 py-1 rounded-full">
+            <Star className="w-3 h-3" /> {project.badge}
+          </div>
+        )}
+        <div className="flex gap-6 z-10 transform group-hover:scale-110 transition-transform duration-500">
+          {project.icons.map((Icon, iIdx) => (
+            <Icon key={iIdx} className="w-16 h-16 text-primary/40 group-hover:text-primary transition-colors duration-500 drop-shadow-lg" />
+          ))}
+        </div>
+      </div>
+
+      {/* Card Body */}
+      <div className="p-8 flex flex-col flex-grow">
+        <h3 className="text-2xl font-bold mb-3 group-hover:text-gradient transition-all">{project.title}</h3>
+        <p className="text-muted-foreground mb-6 flex-grow">{project.description}</p>
+
+        <div className="flex flex-wrap gap-2 mb-8">
+          {project.tags.map((tag, tIdx) => (
+            <span key={tIdx} className="text-xs font-medium px-3 py-1 bg-secondary/10 text-secondary-foreground rounded-full border border-secondary/20">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex gap-4 mt-auto">
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid={`link-live-${idx}`}
+              className="flex-1 flex items-center justify-center gap-2 h-10 rounded-md bg-primary/10 text-primary border border-primary/30 hover:bg-primary hover:text-primary-foreground transition-colors font-medium text-sm"
+            >
+              <Globe className="w-4 h-4" /> Visit Website
+            </a>
+          ) : (
+            <button
+              disabled
+              className="flex-1 flex items-center justify-center gap-2 h-10 rounded-md bg-primary/5 text-primary/40 border border-primary/10 font-medium text-sm cursor-not-allowed"
+            >
+              <ExternalLink className="w-4 h-4" /> Live Demo
+            </button>
+          )}
+          <a
+            href={project.githubUrl ?? "https://github.com/ablayaanonline"}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid={`link-github-${idx}`}
+            className="flex-1 flex items-center justify-center gap-2 h-10 rounded-md bg-white/5 text-foreground border border-white/10 hover:bg-white/10 transition-colors font-medium text-sm"
+          >
+            <Github className="w-4 h-4" /> GitHub
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
 
   return (
     <section id="projects" className="py-24 relative bg-card/20">
@@ -47,48 +180,35 @@ export default function Projects() {
           <div className="h-1 w-20 bg-gradient-to-r from-primary to-secondary rounded-full" />
         </motion.div>
 
+        {/* Real / Live Projects */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="text-sm font-semibold uppercase tracking-widest text-primary mb-6 flex items-center gap-2"
+        >
+          <Globe className="w-4 h-4" /> Live Websites
+        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+          {realProjects.map((project, idx) => (
+            <ProjectCard key={idx} project={project} idx={idx} delay={idx * 0.1} />
+          ))}
+        </div>
+
+        {/* Personal / Demo Projects */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2"
+        >
+          <Star className="w-4 h-4" /> Personal Projects
+        </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {projects.map((project, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="group glass-panel rounded-2xl overflow-hidden flex flex-col border border-white/5 hover:border-primary/40 transition-all duration-300"
-            >
-              <div className="h-48 w-full bg-gradient-to-br from-background via-muted to-background relative overflow-hidden flex items-center justify-center border-b border-white/5 group-hover:border-primary/20">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                <div className="flex gap-6 z-10 transform group-hover:scale-110 transition-transform duration-500">
-                  {project.icons.map((Icon, iIdx) => (
-                    <Icon key={iIdx} className="w-16 h-16 text-primary/40 group-hover:text-primary transition-colors duration-500 drop-shadow-lg" />
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-gradient transition-all">{project.title}</h3>
-                <p className="text-muted-foreground mb-6 flex-grow">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-xs font-medium px-3 py-1 bg-secondary/10 text-secondary-foreground rounded-full border border-secondary/20">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex gap-4 mt-auto">
-                  <button className="flex-1 flex items-center justify-center gap-2 h-10 rounded-md bg-primary/10 text-primary border border-primary/30 hover:bg-primary hover:text-primary-foreground transition-colors font-medium text-sm">
-                    <ExternalLink className="w-4 h-4" /> Live Demo
-                  </button>
-                  <button className="flex-1 flex items-center justify-center gap-2 h-10 rounded-md bg-white/5 text-foreground border border-white/10 hover:bg-white/10 transition-colors font-medium text-sm">
-                    <Github className="w-4 h-4" /> GitHub
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+          {demoProjects.map((project, idx) => (
+            <ProjectCard key={idx} project={project} idx={idx} delay={idx * 0.08} />
           ))}
         </div>
       </div>

@@ -8,26 +8,25 @@ function Counter({ from, to, duration = 2 }: { from: number; to: number; duratio
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    if (isInView) {
-      let startTime: number;
-      let animationFrame: number;
+    if (!isInView) return;
 
-      const step = (timestamp: number) => {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-        
-        // easeOutQuart
-        const ease = 1 - Math.pow(1 - progress, 4);
-        setCount(Math.floor(ease * (to - from) + from));
+    let startTime: number;
+    let animationFrame: number;
 
-        if (progress < 1) {
-          animationFrame = requestAnimationFrame(step);
-        }
-      };
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
 
-      animationFrame = requestAnimationFrame(step);
-      return () => cancelAnimationFrame(animationFrame);
-    }
+      const ease = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(ease * (to - from) + from));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(step);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrame);
   }, [isInView, from, to, duration]);
 
   return <span ref={ref}>{count}</span>;
