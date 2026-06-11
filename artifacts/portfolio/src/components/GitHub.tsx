@@ -75,11 +75,11 @@ export default function GitHub() {
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">GitHub Profile</div>
-                  <div className="font-bold font-mono text-sm">Abdimaalik Hasan Mohamed</div>
+                  <div className="font-bold font-mono text-sm">ablayaanonline</div>
                 </div>
               </div>
               <a
-                href="https://github.com/abdimaalik-hasan-mohamed"
+                href="https://github.com/ablayaanonline"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="link-github-profile"

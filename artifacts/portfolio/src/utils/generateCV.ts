@@ -128,7 +128,7 @@ export function downloadCV() {
       <div class="header-right">
         <div>&#9993; <a href="mailto:Adbulmaalikhasanmohamed@gmail.com">Adbulmaalikhasanmohamed@gmail.com</a></div>
         <div>&#128222; <a href="https://wa.me/252656042512">+252 656 042 512</a></div>
-        <div>&#128279; <a href="https://github.com/abdimaalik-hasan-mohamed">github.com/abdimaalik-hasan-mohamed</a></div>
+        <div>&#128279; <a href="https://github.com/ablayaanonline">github.com/ablayaanonline</a></div>
       </div>
     </div>
 
