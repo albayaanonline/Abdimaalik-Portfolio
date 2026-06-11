@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import profilePhoto from "@assets/Screenshot_20260611_122114_Gallery(1)_1781169840829.jpg";
 
 function Counter({ from, to, duration = 2 }: { from: number; to: number; duration?: number }) {
   const [count, setCount] = useState(from);
@@ -77,7 +78,26 @@ export default function About() {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center lg:hidden mb-8"
+        >
+          <div className="relative h-40 w-40 rounded-full p-1 bg-gradient-to-r from-primary to-secondary neon-glow">
+            <div className="h-full w-full rounded-full overflow-hidden">
+              <img
+                src={profilePhoto}
+                alt="Abdimaalik Hasan Mohamed"
+                data-testid="img-about-profile"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}

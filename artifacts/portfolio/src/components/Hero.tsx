@@ -4,6 +4,7 @@ import ParticleCanvas from "./ParticleCanvas";
 import { SiReact, SiNodedotjs, SiTypescript, SiNextdotjs } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa";
 import { downloadCV } from "@/utils/generateCV";
+import profilePhoto from "@assets/Screenshot_20260611_122114_Gallery(1)_1781169840829.jpg";
 
 export default function Hero() {
   const roles = [
@@ -92,9 +93,14 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <div className="relative mb-8 h-32 w-32 rounded-full p-1 bg-gradient-to-r from-primary to-secondary neon-glow">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-background">
-              <span className="text-4xl font-bold text-gradient">AD</span>
+          <div className="relative mb-8 h-36 w-36 rounded-full p-1 bg-gradient-to-r from-primary to-secondary neon-glow">
+            <div className="h-full w-full rounded-full overflow-hidden">
+              <img
+                src={profilePhoto}
+                alt="Abdimaalik Hasan Mohamed"
+                data-testid="img-hero-profile"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
           </div>
 
