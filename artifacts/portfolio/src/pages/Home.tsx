@@ -13,6 +13,7 @@ import Contact from "@/components/Contact";
 import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import AIAssistant from "@/components/AIAssistant";
 import { Toaster } from "sonner";
 
 export default function Home() {
@@ -38,6 +39,7 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <AIAssistant />
       
       <Toaster theme="dark" position="bottom-right" />
     </div>
