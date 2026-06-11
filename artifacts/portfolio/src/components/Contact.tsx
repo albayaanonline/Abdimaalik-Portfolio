@@ -23,11 +23,11 @@ export default function Contact() {
   };
 
   const contactMethods = [
-    { icon: <Mail className="w-5 h-5" />, label: "Email", value: "hello@abdimaalik.dev", href: "mailto:hello@abdimaalik.dev" },
-    { icon: <FaWhatsapp className="w-5 h-5" />, label: "WhatsApp", value: "+1 (555) 123-4567", href: "#" },
-    { icon: <FaTelegram className="w-5 h-5" />, label: "Telegram", value: "@abdimaalik_dev", href: "#" },
-    { icon: <FaLinkedin className="w-5 h-5" />, label: "LinkedIn", value: "in/abdimaalik", href: "#" },
-    { icon: <FaGithub className="w-5 h-5" />, label: "GitHub", value: "abdimaalik-dev", href: "#" },
+    { icon: <Mail className="w-5 h-5" />, label: "Email", value: "Adbulmaalikhasanmohamed@gmail.com", href: "mailto:Adbulmaalikhasanmohamed@gmail.com" },
+    { icon: <FaWhatsapp className="w-5 h-5" />, label: "WhatsApp", value: "+252 656 042 512", href: "https://wa.me/252656042512?text=Hi%20Abdimaalik%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20work%20with%20you!" },
+    { icon: <FaTelegram className="w-5 h-5" />, label: "Telegram", value: "@abdimaalik_dev", href: "https://t.me/abdimaalik_dev" },
+    { icon: <FaLinkedin className="w-5 h-5" />, label: "LinkedIn", value: "Abdimaalik Hasan", href: "https://linkedin.com/in/abdimaalik-hasan" },
+    { icon: <FaGithub className="w-5 h-5" />, label: "GitHub", value: "abdimaalik-hasan-mohamed", href: "https://github.com/abdimaalik-hasan-mohamed" },
   ];
 
   return (

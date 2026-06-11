@@ -3,13 +3,13 @@ import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaInstagram, FaTelegram, F
 
 export default function SocialLinks() {
   const socials = [
-    { icon: FaGithub, name: "GitHub", href: "#", color: "hover:text-[#ffffff] hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" },
-    { icon: FaLinkedin, name: "LinkedIn", href: "#", color: "hover:text-[#0a66c2] hover:drop-shadow-[0_0_8px_rgba(10,102,194,0.8)]" },
+    { icon: FaGithub, name: "GitHub", href: "https://github.com/abdimaalik-hasan-mohamed", color: "hover:text-[#ffffff] hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" },
+    { icon: FaLinkedin, name: "LinkedIn", href: "https://linkedin.com/in/abdimaalik-hasan", color: "hover:text-[#0a66c2] hover:drop-shadow-[0_0_8px_rgba(10,102,194,0.8)]" },
     { icon: FaTwitter, name: "Twitter/X", href: "#", color: "hover:text-[#1da1f2] hover:drop-shadow-[0_0_8px_rgba(29,161,242,0.8)]" },
     { icon: FaFacebook, name: "Facebook", href: "#", color: "hover:text-[#1877f2] hover:drop-shadow-[0_0_8px_rgba(24,119,242,0.8)]" },
     { icon: FaInstagram, name: "Instagram", href: "#", color: "hover:text-[#e1306c] hover:drop-shadow-[0_0_8px_rgba(225,48,108,0.8)]" },
-    { icon: FaTelegram, name: "Telegram", href: "#", color: "hover:text-[#0088cc] hover:drop-shadow-[0_0_8px_rgba(0,136,204,0.8)]" },
-    { icon: FaWhatsapp, name: "WhatsApp", href: "#", color: "hover:text-[#25d366] hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]" },
+    { icon: FaTelegram, name: "Telegram", href: "https://t.me/abdimaalik_dev", color: "hover:text-[#0088cc] hover:drop-shadow-[0_0_8px_rgba(0,136,204,0.8)]" },
+    { icon: FaWhatsapp, name: "WhatsApp", href: "https://wa.me/252656042512?text=Hi%20Abdimaalik%2C%20I%20found%20your%20portfolio!", color: "hover:text-[#25d366] hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]" },
   ];
 
   return (

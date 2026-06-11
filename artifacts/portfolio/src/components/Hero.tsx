@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticleCanvas from "./ParticleCanvas";
 import { SiReact, SiNodedotjs, SiTypescript, SiNextdotjs } from "react-icons/si";
+import { FaWhatsapp } from "react-icons/fa";
+import { downloadCV } from "@/utils/generateCV";
 
 export default function Hero() {
   const roles = [
@@ -132,11 +134,24 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            <a href="#cv" className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-primary to-secondary px-8 text-sm font-medium text-primary-foreground shadow transition-all hover:scale-105 neon-glow focus-visible:outline-none">
+            <button
+              onClick={downloadCV}
+              data-testid="button-download-cv"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-gradient-to-r from-primary to-secondary px-8 text-sm font-medium text-primary-foreground shadow transition-all hover:scale-105 neon-glow focus-visible:outline-none cursor-pointer"
+            >
               Download CV
-            </a>
-            <a href="#contact" className="inline-flex h-12 items-center justify-center rounded-md border border-primary/50 bg-transparent px-8 text-sm font-medium text-primary shadow-sm transition-all hover:bg-primary/10 hover:border-primary focus-visible:outline-none">
+            </button>
+            <a href="#contact" data-testid="link-contact-me" className="inline-flex h-12 items-center justify-center rounded-md border border-primary/50 bg-transparent px-8 text-sm font-medium text-primary shadow-sm transition-all hover:bg-primary/10 hover:border-primary focus-visible:outline-none">
               Contact Me
+            </a>
+            <a
+              href="https://wa.me/252656042512?text=Hi%20Abdimaalik%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20work%20with%20you!"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="button-hero-whatsapp"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#25d366]/10 border border-[#25d366]/40 px-8 text-sm font-medium text-[#25d366] shadow-sm transition-all hover:bg-[#25d366]/20 hover:border-[#25d366] focus-visible:outline-none"
+            >
+              <FaWhatsapp size={18} /> WhatsApp
             </a>
           </motion.div>
         </motion.div>

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { Github, GitCommit, GitPullRequest, Repository } from "lucide-react";
+import { Github, GitCommit, GitPullRequest, ExternalLink } from "lucide-react";
 
 export default function GitHub() {
   const languageData = [
@@ -74,12 +74,18 @@ export default function GitHub() {
                   <Github className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Username</div>
-                  <div className="font-bold font-mono">abdimaalik-dev</div>
+                  <div className="text-sm text-muted-foreground">GitHub Profile</div>
+                  <div className="font-bold font-mono text-sm">Abdimaalik Hasan Mohamed</div>
                 </div>
               </div>
-              <a href="#" className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-colors">
-                Follow
+              <a
+                href="https://github.com/abdimaalik-hasan-mohamed"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="link-github-profile"
+                className="flex items-center gap-1 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                View <ExternalLink className="w-3 h-3" />
               </a>
             </div>
 

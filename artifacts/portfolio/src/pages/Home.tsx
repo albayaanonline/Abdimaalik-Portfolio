@@ -12,6 +12,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { Toaster } from "sonner";
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
         <SocialLinks />
       </main>
       <Footer />
+      <FloatingWhatsApp />
       
       <Toaster theme="dark" position="bottom-right" />
     </div>
