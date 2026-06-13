@@ -12,6 +12,8 @@ type FormData = {
   message: string;
 };
 
+const API_BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function Contact() {
   const { content } = usePortfolioContent();
   const { email, whatsapp, whatsappDisplay, telegram, linkedin, github } = content.contact;
@@ -19,10 +21,19 @@ export default function Contact() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
-    toast.success("Message sent! I'll get back to you soon.");
-    reset();
+    try {
+      const res = await fetch(`${API_BASE}/api/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+      toast.success("Message sent! I'll get back to you soon.");
+      reset();
+    } catch {
+      toast.error("Failed to send message. Please try WhatsApp or email directly.");
+    }
   };
 
   const contactMethods = [
@@ -115,6 +126,7 @@ export default function Contact() {
                   {errors.email && <span className="text-xs text-destructive">{errors.email.message}</span>}
                 </div>
               </div>
+
               <div className="space-y-2 mb-6">
                 <label htmlFor="subject" className="text-sm font-medium text-muted-foreground">Subject</label>
                 <input
@@ -126,6 +138,7 @@ export default function Contact() {
                 />
                 {errors.subject && <span className="text-xs text-destructive">{errors.subject.message}</span>}
               </div>
+
               <div className="space-y-2 mb-8">
                 <label htmlFor="message" className="text-sm font-medium text-muted-foreground">Message</label>
                 <textarea
@@ -137,6 +150,7 @@ export default function Contact() {
                 />
                 {errors.message && <span className="text-xs text-destructive">{errors.message.message}</span>}
               </div>
+
               <button
                 type="submit"
                 disabled={isSubmitting}

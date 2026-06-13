@@ -3,6 +3,13 @@
   "outputDirectory": "artifacts/portfolio/dist/public",
   "installCommand": "pnpm install --frozen-lockfile",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
   ]
 }
