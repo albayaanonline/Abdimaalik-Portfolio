@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Mail, Send, MapPin, Phone } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { FaWhatsapp, FaTelegram, FaLinkedin, FaGithub } from "react-icons/fa";
+import { usePortfolioContent } from "@/lib/content";
 
 type FormData = {
   name: string;
@@ -12,10 +13,12 @@ type FormData = {
 };
 
 export default function Contact() {
+  const { content } = usePortfolioContent();
+  const { email, whatsapp, whatsappDisplay, telegram, linkedin, github } = content.contact;
+
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
     toast.success("Message sent! I'll get back to you soon.");
@@ -23,11 +26,11 @@ export default function Contact() {
   };
 
   const contactMethods = [
-    { icon: <Mail className="w-5 h-5" />, label: "Email", value: "Adbulmaalikhasanmohamed@gmail.com", href: "mailto:Adbulmaalikhasanmohamed@gmail.com" },
-    { icon: <FaWhatsapp className="w-5 h-5" />, label: "WhatsApp", value: "+252 656 042 512", href: "https://wa.me/252656042512?text=Hi%20Abdimaalik%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20work%20with%20you!" },
-    { icon: <FaTelegram className="w-5 h-5" />, label: "Telegram", value: "@abdimaalik_dev", href: "https://t.me/abdimaalik_dev" },
-    { icon: <FaLinkedin className="w-5 h-5" />, label: "LinkedIn", value: "Abdimaalik Hasan", href: "https://linkedin.com/in/abdimaalik-hasan" },
-    { icon: <FaGithub className="w-5 h-5" />, label: "GitHub", value: "ablayaanonline", href: "https://github.com/ablayaanonline" },
+    { icon: <Mail className="w-5 h-5" />, label: "Email", value: email, href: `mailto:${email}` },
+    { icon: <FaWhatsapp className="w-5 h-5" />, label: "WhatsApp", value: whatsappDisplay, href: `https://wa.me/${whatsapp}?text=Hi%20Abdimaalik%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20work%20with%20you!` },
+    { icon: <FaTelegram className="w-5 h-5" />, label: "Telegram", value: telegram, href: `https://t.me/${telegram.replace("@", "")}` },
+    { icon: <FaLinkedin className="w-5 h-5" />, label: "LinkedIn", value: "Abdimaalik Hasan", href: linkedin },
+    { icon: <FaGithub className="w-5 h-5" />, label: "GitHub", value: github.replace("https://github.com/", ""), href: github },
   ];
 
   return (
@@ -48,8 +51,7 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">
-          {/* Contact Info */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -60,8 +62,8 @@ export default function Contact() {
               <h3 className="text-2xl font-bold mb-8 text-gradient">Contact Information</h3>
               <div className="space-y-6">
                 {contactMethods.map((method, idx) => (
-                  <a 
-                    key={idx} 
+                  <a
+                    key={idx}
                     href={method.href}
                     className="flex items-center gap-4 group p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
                   >
@@ -78,8 +80,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -99,13 +100,12 @@ export default function Contact() {
                   />
                   {errors.name && <span className="text-xs text-destructive">{errors.name.message}</span>}
                 </div>
-                
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium text-muted-foreground">Your Email</label>
                   <input
                     id="email"
                     type="email"
-                    {...register("email", { 
+                    {...register("email", {
                       required: "Email is required",
                       pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" }
                     })}
@@ -115,7 +115,6 @@ export default function Contact() {
                   {errors.email && <span className="text-xs text-destructive">{errors.email.message}</span>}
                 </div>
               </div>
-
               <div className="space-y-2 mb-6">
                 <label htmlFor="subject" className="text-sm font-medium text-muted-foreground">Subject</label>
                 <input
@@ -127,7 +126,6 @@ export default function Contact() {
                 />
                 {errors.subject && <span className="text-xs text-destructive">{errors.subject.message}</span>}
               </div>
-
               <div className="space-y-2 mb-8">
                 <label htmlFor="message" className="text-sm font-medium text-muted-foreground">Message</label>
                 <textarea
@@ -139,7 +137,6 @@ export default function Contact() {
                 />
                 {errors.message && <span className="text-xs text-destructive">{errors.message.message}</span>}
               </div>
-
               <button
                 type="submit"
                 disabled={isSubmitting}

@@ -6,37 +6,49 @@ import {
   SiTailwindcss, SiPython
 } from "react-icons/si";
 import { ExternalLink, Github, Globe, Star, ImageOff } from "lucide-react";
+import { usePortfolioContent, EditableProject } from "@/lib/content";
 
-type Project = {
-  title: string;
-  description: string;
-  tags: string[];
-  icons: React.ComponentType<{ className?: string }>[];
-  liveUrl?: string;
-  githubUrl?: string;
-  isReal?: boolean;
-  badge?: string;
-  screenshotUrl?: string;
+type IconComponent = React.ComponentType<{ className?: string }>;
+
+const TAG_ICON_MAP: Record<string, IconComponent> = {
+  "React": SiReact,
+  "Next.js": SiNextdotjs,
+  "TypeScript": SiTypescript,
+  "Node.js": SiNodedotjs,
+  "Express": SiExpress,
+  "PostgreSQL": SiPostgresql,
+  "Supabase": SiSupabase,
+  "OpenAI": SiOpenai,
+  "Python": SiPython,
+  "Tailwind CSS": SiTailwindcss,
 };
+
+function getIconsForTags(tags: string[]): IconComponent[] {
+  const found: IconComponent[] = [];
+  for (const tag of tags) {
+    const Icon = TAG_ICON_MAP[tag];
+    if (Icon && !found.includes(Icon)) found.push(Icon);
+    if (found.length >= 3) break;
+  }
+  if (found.length === 0) return [SiReact];
+  return found;
+}
 
 function ProjectImage({
   screenshotUrl,
   title,
   icons,
-  isReal,
-  badge,
+  isLive,
 }: {
   screenshotUrl?: string;
   title: string;
-  icons: React.ComponentType<{ className?: string }>[];
-  isReal?: boolean;
-  badge?: string;
+  icons: IconComponent[];
+  isLive?: boolean;
 }) {
   const [imgError, setImgError] = useState(false);
 
   return (
     <div className="h-48 w-full bg-gradient-to-br from-background via-muted to-background relative overflow-hidden flex items-center justify-center border-b border-white/5 group-hover:border-primary/20">
-      {/* Real screenshot */}
       {screenshotUrl && !imgError ? (
         <img
           src={screenshotUrl}
@@ -48,18 +60,16 @@ function ProjectImage({
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
       )}
 
-      {/* Overlay gradient for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
 
-      {/* Badge */}
-      {isReal && (
+      {isLive && (
         <div className="absolute top-3 right-3 flex items-center gap-1 bg-primary/20 border border-primary/40 text-primary text-xs font-semibold px-2 py-1 rounded-full z-10">
           <Globe className="w-3 h-3" /> Live
         </div>
       )}
-      {badge && !isReal && (
+      {!isLive && (
         <div className="absolute top-3 right-3 flex items-center gap-1 bg-secondary/10 border border-secondary/20 text-muted-foreground text-xs font-medium px-2 py-1 rounded-full z-10">
-          <Star className="w-3 h-3" /> {badge}
+          <Star className="w-3 h-3" /> Personal
         </div>
       )}
       {screenshotUrl && imgError && (
@@ -68,7 +78,6 @@ function ProjectImage({
         </div>
       )}
 
-      {/* Tech icons — shown when no screenshot or on hover */}
       <div className={`flex gap-6 z-10 transform transition-all duration-500 ${screenshotUrl && !imgError ? "opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100" : "group-hover:scale-110"}`}>
         {icons.map((Icon, iIdx) => (
           <Icon key={iIdx} className="w-16 h-16 text-primary/60 group-hover:text-primary transition-colors duration-500 drop-shadow-lg" />
@@ -78,7 +87,9 @@ function ProjectImage({
   );
 }
 
-function ProjectCard({ project, delay }: { project: Project; delay: number }) {
+function ProjectCard({ project, delay }: { project: EditableProject; delay: number }) {
+  const icons = getIconsForTags(project.tags);
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -91,9 +102,8 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
       <ProjectImage
         screenshotUrl={project.screenshotUrl}
         title={project.title}
-        icons={project.icons}
-        isReal={project.isReal}
-        badge={project.badge}
+        icons={icons}
+        isLive={project.isLive}
       />
 
       <div className="p-8 flex flex-col flex-grow">
@@ -128,7 +138,7 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
             </button>
           )}
           <a
-            href={project.githubUrl ?? "https://github.com/ablayaanonline"}
+            href={project.githubUrl || "https://github.com/ablayaanonline"}
             target="_blank"
             rel="noopener noreferrer"
             data-testid={`link-github-${project.title.replace(/\s+/g, "-").toLowerCase()}`}
@@ -143,79 +153,9 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
 }
 
 export default function Projects() {
-  const realProjects: Project[] = [
-    {
-      title: "Albayaan Online",
-      description: "A professional Islamic and educational platform designed to provide valuable content and digital services to a global audience.",
-      tags: ["Web Platform", "Education", "Islamic Content"],
-      icons: [SiReact, SiNodedotjs, SiTailwindcss],
-      liveUrl: "https://albayaanonline.com",
-      isReal: true,
-      badge: "Live Website",
-      screenshotUrl: "https://image.thum.io/get/width/640/crop/450/noanimate/https://albayaanonline.com",
-    },
-    {
-      title: "Albayaan Pro",
-      description: "A modern web platform built to provide advanced digital services, tools, and online solutions for businesses and individuals.",
-      tags: ["Web App", "Digital Services", "SaaS"],
-      icons: [SiNextdotjs, SiTypescript, SiTailwindcss],
-      liveUrl: "https://albayaan.pro",
-      isReal: true,
-      badge: "Live Website",
-      screenshotUrl: "https://image.thum.io/get/width/640/crop/450/noanimate/https://albayaan.pro",
-    },
-  ];
-
-  const demoProjects: Project[] = [
-    {
-      title: "Quran Learning Platform",
-      description: "Interactive Quran learning platform with real-time progress tracking, student dashboards, and a modern, accessible user experience.",
-      tags: ["React", "Node.js", "PostgreSQL"],
-      icons: [SiReact, SiNodedotjs, SiPostgresql],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-    {
-      title: "AI WhatsApp Agent",
-      description: "An intelligent WhatsApp assistant capable of answering customer messages, handling inquiries, and automating conversational workflows.",
-      tags: ["OpenAI", "Node.js", "Automation"],
-      icons: [SiOpenai, SiNodedotjs],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-    {
-      title: "Business Management Dashboard",
-      description: "Comprehensive digital business management platform featuring real-time analytics, reporting, and resource planning tools.",
-      tags: ["React", "Express", "PostgreSQL"],
-      icons: [SiReact, SiExpress, SiPostgresql],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-    {
-      title: "Online Learning System",
-      description: "Educational platform featuring structured courses, interactive quizzes, video hosting, and robust student performance tracking.",
-      tags: ["Next.js", "TypeScript", "Supabase"],
-      icons: [SiNextdotjs, SiTypescript, SiSupabase],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-    {
-      title: "AI Automation Platform",
-      description: "End-to-end AI workflow automation platform that connects services, triggers actions, and eliminates repetitive manual tasks.",
-      tags: ["OpenAI", "Python", "Node.js"],
-      icons: [SiOpenai, SiPython, SiNodedotjs],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-    {
-      title: "Modern SaaS Dashboard",
-      description: "Feature-rich SaaS admin dashboard with real-time data visualization, user management, billing integration, and dark mode.",
-      tags: ["React", "TypeScript", "Tailwind CSS"],
-      icons: [SiReact, SiTypescript, SiTailwindcss],
-      githubUrl: "https://github.com/ablayaanonline",
-      badge: "Personal Project",
-    },
-  ];
+  const { content } = usePortfolioContent();
+  const liveProjects = content.projects.filter((p) => p.isLive);
+  const personalProjects = content.projects.filter((p) => !p.isLive);
 
   return (
     <section id="projects" className="py-24 relative bg-card/20">
@@ -231,37 +171,41 @@ export default function Projects() {
           <div className="h-1 w-20 bg-gradient-to-r from-primary to-secondary rounded-full" />
         </motion.div>
 
-        {/* Live Websites */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-sm font-semibold uppercase tracking-widest text-primary mb-6 flex items-center gap-2"
-        >
-          <Globe className="w-4 h-4" /> Live Websites
-        </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-          {realProjects.map((project, idx) => (
-            <ProjectCard key={project.title} project={project} delay={idx * 0.1} />
-          ))}
-        </div>
+        {liveProjects.length > 0 && (
+          <>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-sm font-semibold uppercase tracking-widest text-primary mb-6 flex items-center gap-2"
+            >
+              <Globe className="w-4 h-4" /> Live Websites
+            </motion.p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+              {liveProjects.map((project, idx) => (
+                <ProjectCard key={project.id} project={project} delay={idx * 0.1} />
+              ))}
+            </div>
+          </>
+        )}
 
-        {/* Personal Projects */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2"
-        >
-          <Star className="w-4 h-4" /> Personal Projects
-        </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {demoProjects.map((project, idx) => (
-            <ProjectCard key={project.title} project={project} delay={idx * 0.08} />
-          ))}
-        </div>
+        {personalProjects.length > 0 && (
+          <>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2"
+            >
+              <Star className="w-4 h-4" /> Personal Projects
+            </motion.p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {personalProjects.map((project, idx) => (
+                <ProjectCard key={project.id} project={project} delay={idx * 0.08} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
